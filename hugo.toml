@@ -1,0 +1,44 @@
+baseURL = 'https://akzj.github.io/llm-basics-for-beginners/'
+languageCode = 'zh-cn'
+title = 'LLM Basics for Beginners'
+description = 'LLM基础知识学习指南'
+theme = 'PaperMod'
+
+# 数学公式支持
+[markup.math]
+  enable = true
+  # 可选：使用KaTeX或MathJax
+  # KaTeX加载更快，MathJax支持更完整的LaTeX语法
+  engine = "MathJax"  # 可选值: "KaTeX", "MathJax"
+  # MathJax配置
+  [markup.math.mathjax]
+    enableExtension = ["tex2jax.js"]
+    config = "TeX-MML-AM_CHTML"
+  # KaTeX配置
+  [markup.math.katex]
+    version = "latest"
+
+# 代码高亮
+[markup.highlight]
+  codeFences = true
+  guessSyntax = true
+  lineNos = true
+  style = "github-dark"
+
+# 菜单配置
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    identifier = "matrix"
+    name = "矩阵基础"
+    url = "/matrix_basics/"
+    weight = 2
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 3

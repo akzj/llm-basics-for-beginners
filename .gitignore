@@ -1,0 +1,10 @@
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+
+# Hugo
+public/
+hugo_extended_*.tar.gz
+.hugo_build.lock
