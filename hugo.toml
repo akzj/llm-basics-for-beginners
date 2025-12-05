@@ -42,3 +42,8 @@ theme = 'PaperMod'
     name = "关于"
     url = "/about/"
     weight = 3
+  [[menu.main]]
+    identifier = "softmax"
+    name = "Softmax函数"
+    url = "/softmax/"
+    weight = 4
