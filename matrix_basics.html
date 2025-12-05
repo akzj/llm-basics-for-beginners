@@ -264,55 +264,57 @@ class="math inline"><em>a</em><sub><em>i</em><em>j</em></sub></span>表示第i�
 <tr class="odd">
 <td><strong>行矩阵</strong></td>
 <td>只有一行的矩阵（m=1）</td>
-<td><span class="math inline">$\begin{pmatrix} 1 &amp; 2 &amp; 3
-\end{pmatrix}$</span></td>
+<td><span class="math inline">[1,2,3]</span></td>
 <td>表示单个输入的特征向量（如词嵌入）</td>
 </tr>
 <tr class="even">
 <td><strong>列矩阵</strong></td>
 <td>只有一列的矩阵（n=1）</td>
-<td><span class="math inline">$\begin{pmatrix} 1 \\ 2 \\ 3
-\end{pmatrix}$</span></td>
+<td><span class="math inline">[1;2;3]</span></td>
 <td>表示单个样本的输出预测</td>
 </tr>
 <tr class="odd">
 <td><strong>方阵</strong></td>
 <td>行数=列数（m=n）</td>
-<td><span class="math inline">$\begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4
-\end{pmatrix}$</span></td>
+<td><span class="math inline">[[1,2],[3,4]]</span></td>
 <td>用于线性变换（如Transformer中的权重矩阵）</td>
 </tr>
 <tr class="even">
 <td><strong>单位矩阵</strong></td>
 <td>主对角线为1，其余为0的方阵</td>
-<td><span class="math inline">$I_3 = \begin{pmatrix} 1 &amp; 0 &amp; 0
-\\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}$</span></td>
+<td><span
+class="math inline"><em>I</em><sub>3</sub> = [[1,0,0],[0,1,0],[0,0,1]]</span></td>
 <td>作为恒等变换（不改变原矩阵）</td>
 </tr>
 <tr class="odd">
 <td><strong>零矩阵</strong></td>
 <td>所有元素都为0的矩阵</td>
-<td><span class="math inline">$O = \begin{pmatrix} 0 &amp; 0 \\ 0 &amp;
-0 \end{pmatrix}$</span></td>
+<td><span class="math inline"><em>O</em> = [[0,0],[0,0]]</span></td>
 <td>初始化权重或表示空输入</td>
 </tr>
 <tr class="even">
 <td><strong>对角矩阵</strong></td>
 <td>主对角线外元素都为0的方阵</td>
-<td><span class="math inline">$\begin{pmatrix} 5 &amp; 0 \\ 0 &amp; 3
-\end{pmatrix}$</span></td>
+<td><span class="math inline">[[5,0],[0,3]]</span></td>
 <td>用于特征缩放（如SVD分解中的奇异值矩阵）</td>
 </tr>
 <tr class="odd">
 <td><strong>对称矩阵</strong></td>
 <td>满足<span
 class="math inline"><em>A</em><sup><em>T</em></sup> = <em>A</em></span>的方阵（转置后等于自身）</td>
-<td><span class="math inline">$\begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 3
-\end{pmatrix}$</span></td>
+<td><span class="math inline">[[1,2],[2,3]]</span></td>
 <td>表示相似性矩阵（如词向量的相似度矩阵）</td>
 </tr>
 </tbody>
 </table>
+<p><strong>矩阵示例说明</strong>： - 行矩阵：<span
+class="math inline">[1,2,3]</span> 表示只有一行三列的矩阵 -
+列矩阵：<span class="math inline">[1;2;3]</span> 表示只有一列三行的矩阵
+- 方阵：<span class="math inline">[[1,2],[3,4]]</span>
+表示两行两列的矩阵</p>
+<blockquote>
+<p><strong>注</strong>：在实际数学表示中，矩阵通常使用括号包围，但为了在GitHub上更好地渲染，这里使用方括号表示法。</p>
+</blockquote>
 <h2 id="二矩阵的基本运算">二、矩阵的基本运算</h2>
 <h3 id="矩阵加法matrix-addition">1. 矩阵加法（Matrix Addition）</h3>
 <p><strong>定义</strong>：两个同维度的矩阵相加，是对应位置元素相加。</p>
