@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>matrix_basics</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="矩阵基础知识">矩阵基础知识</h1>
+<h2 id="一矩阵的基本定义与概念">一、矩阵的基本定义与概念</h2>
+<h3 id="什么是矩阵">1. 什么是矩阵？</h3>
+<p>矩阵是由<strong>m行n列</strong>的数字（或符号）排列成的矩形数组，记为：</p>
+<p><span class="math display">$$A = \begin{pmatrix} a_{11} &amp; a_{12}
+&amp; \cdots &amp; a_{1n} \\ a_{21} &amp; a_{22} &amp; \cdots &amp;
+a_{2n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{m1} &amp;
+a_{m2} &amp; \cdots &amp; a_{mn} \end{pmatrix}$$</span></p>
+<ul>
+<li><strong>维度</strong>：矩阵的大小用”行×列”表示，上述矩阵A的维度是m×n（读作”m乘n”）。</li>
+<li><strong>元素</strong>：矩阵中的每个数字称为元素，<span
+class="math inline"><em>a</em><sub><em>i</em><em>j</em></sub></span>表示第i行第j列的元素（i是行索引，j是列索引）。</li>
+</ul>
+<h3 id="特殊类型的矩阵">2. 特殊类型的矩阵</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>矩阵类型</th>
+<th>定义</th>
+<th>示例</th>
+<th>在LLM中的应用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>行矩阵</strong></td>
+<td>只有一行的矩阵（m=1）</td>
+<td><span class="math inline">$\begin{pmatrix} 1 &amp; 2 &amp; 3
+\end{pmatrix}$</span></td>
+<td>表示单个输入的特征向量（如词嵌入）</td>
+</tr>
+<tr class="even">
+<td><strong>列矩阵</strong></td>
+<td>只有一列的矩阵（n=1）</td>
+<td><span class="math inline">$\begin{pmatrix} 1 \\ 2 \\ 3
+\end{pmatrix}$</span></td>
+<td>表示单个样本的输出预测</td>
+</tr>
+<tr class="odd">
+<td><strong>方阵</strong></td>
+<td>行数=列数（m=n）</td>
+<td><span class="math inline">$\begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4
+\end{pmatrix}$</span></td>
+<td>用于线性变换（如Transformer中的权重矩阵）</td>
+</tr>
+<tr class="even">
+<td><strong>单位矩阵</strong></td>
+<td>主对角线为1，其余为0的方阵</td>
+<td><span class="math inline">$I_3 = \begin{pmatrix} 1 &amp; 0 &amp; 0
+\\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}$</span></td>
+<td>作为恒等变换（不改变原矩阵）</td>
+</tr>
+<tr class="odd">
+<td><strong>零矩阵</strong></td>
+<td>所有元素都为0的矩阵</td>
+<td><span class="math inline">$O = \begin{pmatrix} 0 &amp; 0 \\ 0 &amp;
+0 \end{pmatrix}$</span></td>
+<td>初始化权重或表示空输入</td>
+</tr>
+<tr class="even">
+<td><strong>对角矩阵</strong></td>
+<td>主对角线外元素都为0的方阵</td>
+<td><span class="math inline">$\begin{pmatrix} 5 &amp; 0 \\ 0 &amp; 3
+\end{pmatrix}$</span></td>
+<td>用于特征缩放（如SVD分解中的奇异值矩阵）</td>
+</tr>
+<tr class="odd">
+<td><strong>对称矩阵</strong></td>
+<td>满足<span
+class="math inline"><em>A</em><sup><em>T</em></sup> = <em>A</em></span>的方阵（转置后等于自身）</td>
+<td><span class="math inline">$\begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 3
+\end{pmatrix}$</span></td>
+<td>表示相似性矩阵（如词向量的相似度矩阵）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="二矩阵的基本运算">二、矩阵的基本运算</h2>
+<h3 id="矩阵加法matrix-addition">1. 矩阵加法（Matrix Addition）</h3>
+<p><strong>定义</strong>：两个同维度的矩阵相加，是对应位置元素相加。</p>
+<p><span class="math display">$$A + B = \begin{pmatrix} a_{11}+b_{11}
+&amp; a_{12}+b_{12} \\ a_{21}+b_{21} &amp; a_{22}+b_{22}
+\end{pmatrix}$$</span></p>
+<p><strong>规则</strong>： *
+只有<strong>同维度</strong>的矩阵才能相加（如2×3矩阵只能和2×3矩阵相加）
+* 满足交换律：<span
+class="math inline"><em>A</em> + <em>B</em> = <em>B</em> + <em>A</em></span>
+* 满足结合律：<span
+class="math inline">(<em>A</em>+<em>B</em>) + <em>C</em> = <em>A</em> + (<em>B</em>+<em>C</em>)</span></p>
+<p><strong>在LLM中的应用</strong>： * 残差连接（Residual
+Connection）：<span
+class="math inline"><em>x</em> + <em>F</em>(<em>x</em>)</span>，将原始输入与网络输出相加，缓解梯度消失问题</p>
+<h3 id="矩阵数乘scalar-multiplication">2. 矩阵数乘（Scalar
+Multiplication）</h3>
+<p><strong>定义</strong>：一个数（标量）与矩阵相乘，是该数与矩阵的每个元素相乘。</p>
+<p><span class="math display">$$k \cdot A = \begin{pmatrix} k\cdot
+a_{11} &amp; k\cdot a_{12} \\ k\cdot a_{21} &amp; k\cdot a_{22}
+\end{pmatrix}$$</span></p>
+<p><strong>规则</strong>： * 标量k可以是任何实数或复数 * 分配律：<span
+class="math inline"><em>k</em>(<em>A</em>+<em>B</em>) = <em>k</em><em>A</em> + <em>k</em><em>B</em></span>；<span
+class="math inline">(<em>k</em>+<em>l</em>)<em>A</em> = <em>k</em><em>A</em> + <em>l</em><em>A</em></span></p>
+<p><strong>在LLM中的应用</strong>： *
+缩放因子：Transformer注意力机制中的<span
+class="math inline">$\frac{1}{\sqrt{d_k}}$</span>，避免内积过大 *
+学习率：梯度下降中的参数更新<span
+class="math inline"><em>θ</em> = <em>θ</em> − <em>η</em> ⋅ ∇<em>L</em><em>o</em><em>s</em><em>s</em></span></p>
+<h3 id="矩阵乘法matrix-multiplication">3. 矩阵乘法（Matrix
+Multiplication）</h3>
+<p><strong>定义</strong>：矩阵A（m×p）与矩阵B（p×n）相乘，结果是m×n的矩阵C，其中C的元素<span
+class="math inline"><em>c</em><sub><em>i</em><em>j</em></sub></span>是A的第i行与B的第j列的内积。</p>
+<p><span class="math display">$$C = AB \implies c_{ij} = \sum_{k=1}^p
+a_{ik}b_{kj}$$</span></p>
+<p><strong>规则</strong>： *
+第一个矩阵的<strong>列数</strong>必须等于第二个矩阵的<strong>行数</strong>（A的列数
+= B的行数 = p） * 结果矩阵C的维度是：A的行数 × B的列数（m×n） *
+<strong>不满足交换律</strong>：通常<span
+class="math inline"><em>A</em><em>B</em> ≠ <em>B</em><em>A</em></span>（顺序很重要！）
+* <strong>满足结合律</strong>：<span
+class="math inline">(<em>A</em><em>B</em>)<em>C</em> = <em>A</em>(<em>B</em><em>C</em>)</span>
+* <strong>满足分配律</strong>：<span
+class="math inline"><em>A</em>(<em>B</em>+<em>C</em>) = <em>A</em><em>B</em> + <em>A</em><em>C</em></span>；<span
+class="math inline">(<em>A</em>+<em>B</em>)<em>C</em> = <em>A</em><em>C</em> + <em>B</em><em>C</em></span></p>
+<p><strong>在LLM中的应用</strong>（重点！）： * 注意力机制核心：<span
+class="math inline"><em>Q</em><em>K</em><sup><em>T</em></sup></span>，计算查询与键的相似度
+* 权重投影：<span
+class="math inline"><em>Q</em><em>W</em><sub><em>i</em></sub><sup><em>Q</em></sup></span>，将查询向量投影到新的向量空间
+* 多头注意力融合：<span
+class="math inline"><em>C</em><em>o</em><em>n</em><em>c</em><em>a</em><em>t</em>(<em>h</em><em>e</em><em>a</em><em>d</em><sub>1</sub>,...,<em>h</em><em>e</em><em>a</em><em>d</em><sub><em>h</em></sub>)<em>W</em><sup><em>O</em></sup></span>，融合多组注意力信息
+* 前馈网络：<span
+class="math inline"><em>m</em><em>a</em><em>x</em>(0,<em>x</em><em>W</em><sub>1</sub>+<em>b</em><sub>1</sub>)<em>W</em><sub>2</sub> + <em>b</em><sub>2</sub></span>，实现非线性变换</p>
+<h3 id="矩阵转置matrix-transpose">4. 矩阵转置（Matrix Transpose）</h3>
+<p><strong>定义</strong>：将矩阵的行和列互换，得到转置矩阵<span
+class="math inline"><em>A</em><sup><em>T</em></sup></span>（或<span
+class="math inline"><em>A</em>′</span>）。</p>
+<p><span class="math display">$$A = \begin{pmatrix} a_{11} &amp; a_{12}
+\\ a_{21} &amp; a_{22} \\ a_{31} &amp; a_{32} \end{pmatrix} \implies A^T
+= \begin{pmatrix} a_{11} &amp; a_{21} &amp; a_{31} \\ a_{12} &amp;
+a_{22} &amp; a_{32} \end{pmatrix}$$</span></p>
+<p><strong>规则</strong>： * <span
+class="math inline">(<em>A</em><sup><em>T</em></sup>)<sup><em>T</em></sup> = <em>A</em></span>（转置两次回到原矩阵）
+* <span
+class="math inline">(<em>A</em>+<em>B</em>)<sup><em>T</em></sup> = <em>A</em><sup><em>T</em></sup> + <em>B</em><sup><em>T</em></sup></span>（和的转置=转置的和）
+* <span
+class="math inline">(<em>A</em><em>B</em>)<sup><em>T</em></sup> = <em>B</em><sup><em>T</em></sup><em>A</em><sup><em>T</em></sup></span>（乘积的转置=转置的逆序乘积）
+* 若A是对称矩阵，则<span
+class="math inline"><em>A</em><sup><em>T</em></sup> = <em>A</em></span></p>
+<p><strong>在LLM中的应用</strong>： * 注意力机制：<span
+class="math inline"><em>K</em><sup><em>T</em></sup></span>，将键矩阵转置以便与查询矩阵相乘
+* 向量内积：<span
+class="math inline"><em>x</em><sup><em>T</em></sup><em>y</em></span>，将向量视为列矩阵时的内积表示</p>
+<h3 id="矩阵的迹trace">5. 矩阵的迹（Trace）</h3>
+<p><strong>定义</strong>：方阵A的迹是其主对角线元素的和，记为<span
+class="math inline"><em>t</em><em>r</em>(<em>A</em>)</span>。</p>
+<p><span
+class="math display"><em>t</em><em>r</em>(<em>A</em>) = <em>a</em><sub>11</sub> + <em>a</em><sub>22</sub> + ⋯ + <em>a</em><sub><em>n</em><em>n</em></sub></span></p>
+<p><strong>规则</strong>： * <span
+class="math inline"><em>t</em><em>r</em>(<em>A</em>) = <em>t</em><em>r</em>(<em>A</em><sup><em>T</em></sup>)</span>（转置不改变迹）
+* <span
+class="math inline"><em>t</em><em>r</em>(<em>A</em>+<em>B</em>) = <em>t</em><em>r</em>(<em>A</em>) + <em>t</em><em>r</em>(<em>B</em>)</span>（和的迹=迹的和）
+* <span
+class="math inline"><em>t</em><em>r</em>(<em>A</em><em>B</em>) = <em>t</em><em>r</em>(<em>B</em><em>A</em>)</span>（乘积的迹与顺序无关）</p>
+<p><strong>在LLM中的应用</strong>： *
+矩阵的迹在损失函数和正则化中经常出现，如L1正则化的变种</p>
+<h3 id="矩阵的秩rank">6. 矩阵的秩（Rank）</h3>
+<p><strong>定义</strong>：矩阵的秩是矩阵中线性无关的行（或列）的最大数量，记为<span
+class="math inline"><em>r</em><em>a</em><em>n</em><em>k</em>(<em>A</em>)</span>。</p>
+<p><strong>规则</strong>： * <span
+class="math inline"><em>r</em><em>a</em><em>n</em><em>k</em>(<em>A</em>) = <em>r</em><em>a</em><em>n</em><em>k</em>(<em>A</em><sup><em>T</em></sup>)</span>（行秩=列秩）
+* <span
+class="math inline"><em>r</em><em>a</em><em>n</em><em>k</em>(<em>A</em><em>B</em>) ≤ <em>m</em><em>i</em><em>n</em>(<em>r</em><em>a</em><em>n</em><em>k</em>(<em>A</em>),<em>r</em><em>a</em><em>n</em><em>k</em>(<em>B</em>))</span>（乘积的秩不超过各因子的秩）
+* 若A是m×n矩阵，则<span
+class="math inline"><em>r</em><em>a</em><em>n</em><em>k</em>(<em>A</em>) ≤ <em>m</em><em>i</em><em>n</em>(<em>m</em>,<em>n</em>)</span></p>
+<p><strong>在LLM中的应用</strong>： * 矩阵的秩表示矩阵的有效信息维度 *
+低秩近似：SVD分解将高秩矩阵近似为低秩矩阵，用于模型压缩（如BERT的参数压缩）</p>
+<h2 id="三矩阵的逆与行列式">三、矩阵的逆与行列式</h2>
+<h3 id="矩阵的逆inverse-matrix">1. 矩阵的逆（Inverse Matrix）</h3>
+<p><strong>定义</strong>：对于n阶方阵A，如果存在n阶方阵B，使得<span
+class="math inline"><em>A</em><em>B</em> = <em>B</em><em>A</em> = <em>I</em><sub><em>n</em></sub></span>（单位矩阵），则称B是A的逆矩阵，记为<span
+class="math inline"><em>A</em><sup>−1</sup></span>。</p>
+<p><strong>规则</strong>： *
+只有<strong>非奇异矩阵</strong>（行列式≠0）才有逆矩阵 * <span
+class="math inline">(<em>A</em><sup>−1</sup>)<sup>−1</sup> = <em>A</em></span>（逆的逆是原矩阵）
+* <span
+class="math inline">(<em>A</em><em>B</em>)<sup>−1</sup> = <em>B</em><sup>−1</sup><em>A</em><sup>−1</sup></span>（乘积的逆=逆的逆序乘积）
+* <span
+class="math inline">(<em>A</em><sup><em>T</em></sup>)<sup>−1</sup> = (<em>A</em><sup>−1</sup>)<sup><em>T</em></sup></span>（转置的逆=逆的转置）</p>
+<p><strong>在LLM中的应用</strong>： * 求解线性方程组：<span
+class="math inline"><em>A</em><em>x</em> = <em>b</em> ⟹ <em>x</em> = <em>A</em><sup>−1</sup><em>b</em></span>（但实际中很少直接求逆，而是用梯度下降等优化算法）</p>
+<h3 id="矩阵的行列式determinant">2. 矩阵的行列式（Determinant）</h3>
+<p><strong>定义</strong>：n阶方阵A的行列式是一个标量，记为<span
+class="math inline"><em>d</em><em>e</em><em>t</em>(<em>A</em>)</span>或<span
+class="math inline">|<em>A</em>|</span>，表示矩阵对空间的缩放因子。</p>
+<p><strong>2阶矩阵的行列式</strong>： <span
+class="math display">$$det\begin{pmatrix} a &amp; b \\ c &amp; d
+\end{pmatrix} = ad - bc$$</span></p>
+<p><strong>3阶矩阵的行列式</strong>（沙路法则）： <span
+class="math display">$$det\begin{pmatrix} a &amp; b &amp; c \\ d &amp; e
+&amp; f \\ g &amp; h &amp; i \end{pmatrix} = aei + bfg + cdh - ceg - bdi
+- afh$$</span></p>
+<p><strong>规则</strong>： * 若<span
+class="math inline"><em>d</em><em>e</em><em>t</em>(<em>A</em>) ≠ 0</span>，则A可逆；若<span
+class="math inline"><em>d</em><em>e</em><em>t</em>(<em>A</em>) = 0</span>，则A不可逆（奇异矩阵）
+* <span
+class="math inline"><em>d</em><em>e</em><em>t</em>(<em>A</em><em>B</em>) = <em>d</em><em>e</em><em>t</em>(<em>A</em>) ⋅ <em>d</em><em>e</em><em>t</em>(<em>B</em>)</span>（乘积的行列式=行列式的乘积）
+* <span
+class="math inline"><em>d</em><em>e</em><em>t</em>(<em>A</em><sup><em>T</em></sup>) = <em>d</em><em>e</em><em>t</em>(<em>A</em>)</span>（转置不改变行列式）
+* <span
+class="math inline"><em>d</em><em>e</em><em>t</em>(<em>A</em><sup>−1</sup>) = 1/<em>d</em><em>e</em><em>t</em>(<em>A</em>)</span>（逆矩阵的行列式是原行列式的倒数）</p>
+<p><strong>在LLM中的应用</strong>： *
+行列式在理论上用于判断矩阵的可逆性，但在实际深度学习中很少直接计算（因为高维矩阵的行列式计算复杂度高）</p>
+<h2 id="四矩阵的特征值与特征向量">四、矩阵的特征值与特征向量</h2>
+<h3 id="基本定义">1. 基本定义</h3>
+<p>对于n阶方阵A，如果存在标量<span
+class="math inline"><em>λ</em></span>和非零向量v，使得：</p>
+<p><span
+class="math display"><em>A</em><em>v</em> = <em>λ</em><em>v</em></span></p>
+<p>则称<span
+class="math inline"><em>λ</em></span>是A的<strong>特征值</strong>，v是A的对应于<span
+class="math inline"><em>λ</em></span>的<strong>特征向量</strong>。</p>
+<p><strong>几何意义</strong>：特征向量v经过矩阵A变换后，方向不变，仅缩放了<span
+class="math inline"><em>λ</em></span>倍（<span
+class="math inline"><em>λ</em></span>是缩放因子）。</p>
+<h3 id="特征值的计算">2. 特征值的计算</h3>
+<p>特征值<span class="math inline"><em>λ</em></span>是特征方程的解：</p>
+<p><span
+class="math display"><em>d</em><em>e</em><em>t</em>(<em>A</em>−<em>λ</em><em>I</em>) = 0</span></p>
+<p><strong>2阶矩阵的特征值</strong>： 对于<span class="math inline">$A =
+\begin{pmatrix} a &amp; b \\ c &amp; d
+\end{pmatrix}$</span>，特征方程为： <span
+class="math display">(<em>a</em>−<em>λ</em>)(<em>d</em>−<em>λ</em>) − <em>b</em><em>c</em> = 0 ⟹ <em>λ</em><sup>2</sup> − (<em>a</em>+<em>d</em>)<em>λ</em> + (<em>a</em><em>d</em>−<em>b</em><em>c</em>) = 0</span></p>
+<p>特征值为： <span class="math display">$$\lambda = \frac{(a + d) \pm
+\sqrt{(a + d)^2 - 4(ad - bc)}}{2}$$</span></p>
+<h3 id="性质">3. 性质</h3>
+<ul>
+<li>n阶方阵有n个特征值（可能重复，可能为复数）</li>
+<li>特征值的和等于矩阵的迹：<span
+class="math inline"><em>λ</em><sub>1</sub> + <em>λ</em><sub>2</sub> + ⋯ + <em>λ</em><sub><em>n</em></sub> = <em>t</em><em>r</em>(<em>A</em>)</span></li>
+<li>特征值的积等于矩阵的行列式：<span
+class="math inline"><em>λ</em><sub>1</sub> ⋅ <em>λ</em><sub>2</sub> ⋅ ⋯ ⋅ <em>λ</em><sub><em>n</em></sub> = <em>d</em><em>e</em><em>t</em>(<em>A</em>)</span></li>
+<li>相似矩阵有相同的特征值</li>
+</ul>
+<p><strong>在LLM中的应用</strong>： *
+主成分分析（PCA）：利用协方差矩阵的特征值和特征向量进行降维 *
+谱归一化（Spectral
+Normalization）：限制权重矩阵的最大特征值，提高模型稳定性 *
+理解神经网络的表示能力：特征值分布反映了网络的表达能力</p>
+<h2 id="五矩阵分解">五、矩阵分解</h2>
+<h3 id="奇异值分解svdsingular-value-decomposition">1.
+奇异值分解（SVD，Singular Value Decomposition）</h3>
+<p><strong>定义</strong>：任何m×n矩阵A都可以分解为三个矩阵的乘积：</p>
+<p><span
+class="math display"><em>A</em> = <em>U</em><em>Σ</em><em>V</em><sup><em>T</em></sup></span></p>
+<p>其中： * <span
+class="math inline"><em>U</em></span>：m×m的正交矩阵（左奇异向量） *
+<span
+class="math inline"><em>Σ</em></span>：m×n的对角矩阵（奇异值，按从大到小排列）
+* <span
+class="math inline"><em>V</em></span>：n×n的正交矩阵（右奇异向量）</p>
+<p><strong>几何意义</strong>：将矩阵变换分解为旋转（U）、缩放（Σ）、旋转（V^T）三个步骤</p>
+<p><strong>在LLM中的应用</strong>（重点！）： *
+模型压缩：利用SVD对权重矩阵进行低秩近似，减少参数数量 *
+文本嵌入：用于降维和信息提取，如Word2Vec的可视化 *
+注意力机制优化：对QK^T矩阵进行SVD分解，减少计算量</p>
+<h3 id="qr分解">2. QR分解</h3>
+<p><strong>定义</strong>：任何m×n矩阵A（m≥n）都可以分解为：</p>
+<p><span
+class="math display"><em>A</em> = <em>Q</em><em>R</em></span></p>
+<p>其中： * <span
+class="math inline"><em>Q</em></span>：m×n的正交矩阵（列向量两两正交） *
+<span class="math inline"><em>R</em></span>：n×n的上三角矩阵</p>
+<p><strong>在LLM中的应用</strong>： * 线性方程组求解：提高数值稳定性 *
+最小二乘法：用于模型参数估计</p>
+<h3 id="特征值分解eigenvalue-decomposition">3. 特征值分解（Eigenvalue
+Decomposition）</h3>
+<p><strong>定义</strong>：对于n阶方阵A，如果存在n个线性无关的特征向量，则A可以分解为：</p>
+<p><span
+class="math display"><em>A</em> = <em>Q</em><em>Λ</em><em>Q</em><sup>−1</sup></span></p>
+<p>其中： * <span
+class="math inline"><em>Q</em></span>：由特征向量组成的n×n矩阵 * <span
+class="math inline"><em>Λ</em></span>：由特征值组成的对角矩阵</p>
+<p><strong>注意</strong>：只有可对角化的矩阵（如对称矩阵）才能进行特征值分解</p>
+<p><strong>在LLM中的应用</strong>： *
+理解神经网络的动力学：分析网络状态的演化 *
+协方差矩阵的对角化：用于PCA降维</p>
+<h2 id="六矩阵在llm中的核心应用总结">六、矩阵在LLM中的核心应用总结</h2>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 34%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>矩阵运算/概念</th>
+<th>在LLM中的具体应用</th>
+<th>对应论文公式/模块</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>矩阵乘法</td>
+<td>计算查询与键的相似度</td>
+<td><span
+class="math inline"><em>Q</em><em>K</em><sup><em>T</em></sup></span>（注意力机制）</td>
+</tr>
+<tr class="even">
+<td>矩阵转置</td>
+<td>调整矩阵维度以便相乘</td>
+<td><span
+class="math inline"><em>K</em><sup><em>T</em></sup></span>（注意力机制）</td>
+</tr>
+<tr class="odd">
+<td>标量乘法</td>
+<td>缩放内积结果，避免梯度消失</td>
+<td><span
+class="math inline">$\frac{QK^T}{\sqrt{d_k}}$</span>（注意力机制）</td>
+</tr>
+<tr class="even">
+<td>矩阵拼接</td>
+<td>融合多头注意力的输出</td>
+<td><span
+class="math inline"><em>C</em><em>o</em><em>n</em><em>c</em><em>a</em><em>t</em>(<em>h</em><em>e</em><em>a</em><em>d</em><sub>1</sub>,...,<em>h</em><em>e</em><em>a</em><em>d</em><sub><em>h</em></sub>)</span>（多头注意力）</td>
+</tr>
+<tr class="odd">
+<td>权重矩阵</td>
+<td>将输入投影到新的向量空间</td>
+<td><span
+class="math inline"><em>Q</em><em>W</em><sub><em>i</em></sub><sup><em>Q</em></sup></span>（多头注意力）</td>
+</tr>
+<tr class="even">
+<td>残差连接</td>
+<td>缓解梯度消失问题</td>
+<td><span
+class="math inline"><em>x</em> + <em>F</em>(<em>x</em>)</span>（Transformer块）</td>
+</tr>
+<tr class="odd">
+<td>SVD分解</td>
+<td>模型压缩与降维</td>
+<td>权重矩阵的低秩近似</td>
+</tr>
+<tr class="even">
+<td>特征值/特征向量</td>
+<td>谱归一化，提高模型稳定性</td>
+<td>权重矩阵的谱分析</td>
+</tr>
+</tbody>
+</table>
+<h2
+id="七实操练习用numpy实现矩阵运算">七、实操练习：用NumPy实现矩阵运算</h2>
+<p>为了帮助你巩固矩阵基础知识，以下是一个简单的NumPy代码示例，实现LLM中常用的矩阵运算：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 创建矩阵</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])  <span class="co"># 查询矩阵 (2×3)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> np.array([[<span class="dv">7</span>, <span class="dv">8</span>], [<span class="dv">9</span>, <span class="dv">10</span>], [<span class="dv">11</span>, <span class="dv">12</span>]])  <span class="co"># 键矩阵 (3×2)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.array([[<span class="dv">13</span>, <span class="dv">14</span>], [<span class="dv">15</span>, <span class="dv">16</span>], [<span class="dv">17</span>, <span class="dv">18</span>]])  <span class="co"># 值矩阵 (3×2)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 矩阵乘法（注意力机制核心）</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>QK <span class="op">=</span> np.dot(Q, K)  <span class="co"># 计算QK^T的转置前部分（这里K已经是3×2，相当于K^T是2×3）</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Q×K结果:&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(QK)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;维度: </span><span class="sc">{</span>QK<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 缩放因子（避免内积过大）</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>d_k <span class="op">=</span> K.shape[<span class="dv">1</span>]  <span class="co"># 键的维度</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>scaled_QK <span class="op">=</span> QK <span class="op">/</span> np.sqrt(d_k)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">缩放后的Q×K结果:&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(scaled_QK)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. softmax（转换为概率权重）</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>softmax_QK <span class="op">=</span> np.exp(scaled_QK) <span class="op">/</span> np.<span class="bu">sum</span>(np.exp(scaled_QK), axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">softmax后的权重矩阵:&quot;</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(softmax_QK)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 权重与值矩阵相乘（注意力输出）</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>attention_output <span class="op">=</span> np.dot(softmax_QK, V)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">注意力机制输出:&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attention_output)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;维度: </span><span class="sc">{</span>attention_output<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. 转置操作</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>transposed_K <span class="op">=</span> K.T</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">K的转置:&quot;</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transposed_K)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;维度: </span><span class="sc">{</span>transposed_K<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. 矩阵加法（残差连接示例）</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>residual <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]])  <span class="co"># 假设的残差</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>output_with_residual <span class="op">=</span> attention_output <span class="op">+</span> residual</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">带残差连接的输出:&quot;</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(output_with_residual)</span></code></pre></div>
+<p><strong>运行结果预期</strong>：</p>
+<pre><code>Q×K结果:
+[[ 58  64]
+ [139 154]]
+维度: (2, 2)
+
+缩放后的Q×K结果:
+[[29. 32.]
+ [69.5 77.]]
+
+softmax后的权重矩阵:
+[[1.00000000e+00 0.00000000e+00]
+ [5.52036186e-04 9.99447964e-01]]
+
+注意力机制输出:
+[[13. 14.]
+ [16.99663191 17.99663191]]
+维度: (2, 2)
+
+K的转置:
+[[ 7  9 11]
+ [ 8 10 12]]
+维度: (2, 3)
+
+带残差连接的输出:
+[[14. 16.]
+ [19.99663191 21.99663191]]</code></pre>
+<h2 id="核心提醒">核心提醒：</h2>
+<ol type="1">
+<li><strong>理解重于计算</strong>：矩阵运算的核心是理解其”变换”和”映射”的本质，而不是死记硬背公式</li>
+<li><strong>关注维度变化</strong>：在LLM中，矩阵运算的维度变化是关键（如Q×K的维度、注意力输出的维度）</li>
+<li><strong>结合应用学习</strong>：将矩阵知识与Transformer等LLM模型的具体模块结合，更容易记忆和理解</li>
+<li><strong>多动手实践</strong>：通过NumPy等工具实际实现矩阵运算，加深对概念的理解</li>
+</ol>
+<p>通过学习这些矩阵基础知识，你将能够更好地理解LLM模型中的核心运算原理，为深入学习Transformer等模型打下坚实的数学基础。</p>
+</body>
+</html>
