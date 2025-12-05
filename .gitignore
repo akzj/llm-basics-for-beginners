@@ -8,3 +8,13 @@ vendor
 public/
 hugo_extended_*.tar.gz
 .hugo_build.lock
+
+# Jekyll legacy files
+404.html
+Gemfile
+_config.yml
+about.markdown
+index.markdown
+_posts/
+index.html
+matrix_basics.html
